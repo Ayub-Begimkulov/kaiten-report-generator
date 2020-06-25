@@ -46,17 +46,18 @@ app.get("/api/v1/report", async (req, res) => {
     const mapper = card => {
       if (card && card.column && card.title) {
         const { title } = card;
-        let column = card.column && card.column.title;
+        const column = card.column;
+        let columnTitle = column && column.title;
         if (
-          column === "Doing" &&
+          columnTitle === "Doing" &&
           column.parent &&
           column.parent.title === "testing"
         ) {
-          column = "testing";
+          columnTitle = "testing";
         }
-        if (typeof column === "string" && typeof title === "string") {
+        if (typeof columnTitle === "string" && typeof title === "string") {
           index++;
-          return `${index}. ${title} - ${column}\n`;
+          return `${index}. ${title} - ${columnTitle}\n`;
         }
         return "";
       }
